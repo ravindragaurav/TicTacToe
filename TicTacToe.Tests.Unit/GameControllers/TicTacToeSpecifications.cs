@@ -1,10 +1,11 @@
 ﻿using System;
 using NUnit.Framework;
+using TicTacToe.GameControllers;
 
 namespace TicTacToe.Tests.Unit.Controller
 {
     [TestFixture]
-    class GameplayTests
+    class TicTacToeSpecifications
     {
         Game game = new Game();
 
@@ -44,17 +45,7 @@ namespace TicTacToe.Tests.Unit.Controller
             Assert.IsTrue(game.GetWinner() == "X");
         }
 
-        [Test]
-        public void InitialiseBoard_SetFirstCharacter_ReadFirstCharacter_AsExpected()
-        {
-            const string initialBoardSetup = "   " +
-                                             "   " +
-                                             "  X";
-
-           var gameBoard = new GameBoard(initialBoardSetup);
-
-            Assert.AreEqual("X", gameBoard[2,2]);
-        }
+     
 
         [Test]
         public void SamePlayerPlaysTwice_Exception()
@@ -97,66 +88,5 @@ namespace TicTacToe.Tests.Unit.Controller
 
     }
 
-    public class GameBoard
-    {
-        // private string initialBoardSetup;
-        private readonly string[,] board = new string[3, 3];
-        public GameBoard(string initialBoardSetup)
-        {
-            int i = 0;
-            foreach (var singleChar in initialBoardSetup)
-            {
-                this.board[i / 3, i % 3] = singleChar.ToString();
-            }
-        }
-
-        public string this[int x, int y]
-        {
-            get
-            {
-                return "X";
-            }
-
-            set
-            {
-                board[x, y] = value;  //value is the value given to the setter
-            }
-        }
-    }
-
-    public class Game
-    {
-        private string previousMarker;
-        private GameBoard board;
-
-        public Game() : this("")
-        {
-        }
-
-        public Game(string initialBoardSetup)
-        {
-            board = new GameBoard(initialBoardSetup);
-        }
-
-        public string GetWinner()
-        {
-            return this.board[0, 0];
-        }
-
-        public void Play(string marker, int x, int y)
-        {
-            if (marker == previousMarker)
-            {
-                throw new InvalidOperationException();
-            }
-
-            if (this.board[x, y] != null)
-            {
-                throw new InvalidOperationException();
-            }
-
-            previousMarker = marker;
-            this.board[x, y] = marker;
-        }
-    }
+   
 }
